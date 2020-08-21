@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "projects": {
+    "tinkerhub-website": {
+      "root": "apps/tinkerhub-website",
+      "sourceRoot": "apps/tinkerhub-website",
+      "projectType": "application",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/next:build",
+          "options": {
+            "root": "apps/tinkerhub-website",
+            "outputPath": "dist/apps/tinkerhub-website"
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/next:server",
+          "options": {
+            "buildTarget": "tinkerhub-website:build",
+            "dev": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "tinkerhub-website:build:production",
+              "dev": false
+            }
+          }
+        },
+        "export": {
+          "builder": "@nrwl/next:export",
+          "options": {
+            "buildTarget": "tinkerhub-website:build:production"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "apps/tinkerhub-website/tsconfig.json",
+              "apps/tinkerhub-website/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/tinkerhub-website/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/tinkerhub-website/jest.config.js",
+            "tsConfig": "apps/tinkerhub-website/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/next"
+  },
+  "schematics": {
+    "@nrwl/react": {
+      "application": {
+        "babel": true
+      }
+    },
+    "@nrwl/next": {
+      "application": {
+        "style": "styled-components",
+        "linter": "eslint"
+      }
+    }
+  },
+  "defaultProject": "tinkerhub-website"
+}
